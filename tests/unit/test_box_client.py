@@ -25,3 +25,5 @@ def test_box_client_as_user_get():
     user = client.user().get()
     assert user is not None
     assert user.login == "barduinor@gmail.com"
+
+    # TODO: dinamically configure the test user
