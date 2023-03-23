@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Secrets
+.jwt.config.json
+
+# Test sample files
+tests/sample/*
+!tests/sample/README.md
+
 # Distribution / packaging
 .Python
 build/
