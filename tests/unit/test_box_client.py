@@ -1,29 +1,30 @@
 """unit tests for box client"""
 
-from box.box_client import box_client_get, box_client_as_user_get
+from chunked_upload.box_client import box_client_get, box_client_as_user_get
+from tests.conftest import get_settings
+
+settings = get_settings()
 
 
 def test_box_client_get():
     """should return a box client"""
 
-    client = box_client_get(".jwt.config.json")
+    client = box_client_get(settings.jwt_config_path)
     assert client is not None
 
     user = client.user().get()
     assert user is not None
-    assert user.name == "UI-Elements-Sample"
+    assert user.name == settings.login_service_user
 
 
 def test_box_client_as_user_get():
     """should return a box client as user"""
 
-    service_client = box_client_get(".jwt.config.json")
+    service_client = box_client_get(settings.jwt_config_path)
     assert service_client is not None
 
-    client = box_client_as_user_get(service_client, "18622116055")
+    client = box_client_as_user_get(service_client, settings.as_user_id)
 
     user = client.user().get()
     assert user is not None
-    assert user.login == "barduinor@gmail.com"
-
-    # TODO: dinamically configure the test user
+    assert user.login == settings.login_as_user

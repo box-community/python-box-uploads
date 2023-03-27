@@ -1,26 +1,14 @@
 # Sample files
 ---
-To execute the test you'll need to have the following files in this folder:
+Sample files to be uploaded will be created automtically in this folder by running the tests:
 
--file-100m.bin (100 megabytes)
+-file-1MB.bin (1 megabyte)
 
--file-500m.bin (500 megabytes)
+-file-100MB.bin (100 megabytes)
 
--file-1G.bim (1 gigabyte)
+-file-500MB.bin (500 megabytes)
 
-## Creating the file in POSIX
-To creat the files using the dd command, you can use the following commands:
+-file-1GM.bim (1 gigabyte)
 
-### file-100.bin
-```bash
-dd if=/dev/random of=file-100m.bin bs=1024 count=$( expr 1024 \* 1 \* 100 )
-```
-### file-500m.bin
-```bash
-dd if=/dev/random of=file-500m.bin bs=1024 count=$( expr 1024 \* 1 \* 500 )
-```
-### file-1g.binq
-```bash
-dd if=/dev/random of=file-1024m.bin bs=1024 count=$( expr 1024 \* 1024 \* 1 )
-```
+
 
