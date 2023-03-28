@@ -1,9 +1,9 @@
 """main app demo"""
 import logging
+
 from box_uploads.box_client import box_client_get, box_client_as_user_get
-from box_uploads.box_file import file_upload, file_upload_chunked
+from box_uploads.box_file import file_upload, file_upload_chunked, file_upload_manual
 from box_uploads.config import Settings
-from box_uploads.curses_print import stdscr_get, stdscr_print, stdscr_end
 from box_uploads.sample_files import check_sample_files
 
 logging.basicConfig(
@@ -48,71 +48,56 @@ def main():
     else:
         demo_folder = item[0].get()
 
-    stdscr = stdscr_get()
-    stdscr_print(stdscr, 0, 0, "Box Python SDK - Upload Demo")
+    print("Box Python SDK - Upload Demo")
+    print("=" * 40)
 
     sample_file = sample_files["micro"][1]
-    line = 2
-    stdscr_print(stdscr, line, 0, "Normal upload file micro")
-    stdscr_print(stdscr, line + 1, 0, "Uploading file " + sample_file + " ...")
+    print(f" Normal upload {sample_file}", end="\r")
     _, elapsed = file_upload(client, sample_file, demo_folder.id)
-    stdscr_print(
-        stdscr,
-        line + 1,
-        0,
-        "Uploaded file " + sample_file + " in " + str(round(elapsed, 1)) + " seconds",
-    )
+    print(f" Normal upload {sample_file} in {str(round(elapsed, 1))} seconds.")
 
-    line += 3
+    print("-" * 40)
 
     sample_file = sample_files["small"][1]
-    stdscr_print(stdscr, line, 0, "Normal upload file small")
-    stdscr_print(stdscr, line + 1, 0, "Uploading file " + sample_file + " ...")
+    print(f" Normal upload {sample_file}", end="\r")
     _, elapsed = file_upload(client, sample_file, demo_folder.id)
-    stdscr_print(
-        stdscr,
-        line + 1,
-        0,
-        "Uploaded file " + sample_file + " in " + str(round(elapsed, 1)) + " seconds",
-    )
+    print(f" Normal upload {sample_file} in {str(round(elapsed, 1))} seconds.")
 
-    line += 2
-
-    stdscr_print(stdscr, line, 0, "Chunked upload file small, 2 threads")
-    stdscr_print(stdscr, line + 1, 0, "Uploading file " + sample_file + " ...")
+    print(f" Chunked upload {sample_file}, 2 threads", end="\r")
     _, elapsed = file_upload_chunked(client, sample_file, demo_folder.id, 2)
-    stdscr_print(
-        stdscr,
-        line + 1,
-        0,
-        "Uploaded file " + sample_file + " in " + str(round(elapsed, 1)) + " seconds",
+    print(
+        f" Chunked upload {sample_file}, 2 threads in {str(round(elapsed, 1))} seconds."
     )
 
-    line += 3
+    print("-" * 40)
+
     sample_file = sample_files["medium"][1]
-    stdscr_print(stdscr, line, 0, "Normal upload file medium")
-    stdscr_print(stdscr, line + 1, 0, "Uploading file " + sample_file + " ...")
+    print(f" Normal upload {sample_file}", end="\r")
     _, elapsed = file_upload(client, sample_file, demo_folder.id)
-    stdscr_print(
-        stdscr,
-        line + 1,
-        0,
-        "Uploaded file " + sample_file + " in " + str(round(elapsed, 1)) + " seconds",
+    print(f" Normal upload {sample_file} in {str(round(elapsed, 1))} seconds.")
+
+    print(f" Chunked upload {sample_file}, 5 threads", end="\r")
+    _, elapsed = file_upload_chunked(client, sample_file, demo_folder.id, 5)
+    print(
+        f" Chunked upload {sample_file}, 5 threads in {str(round(elapsed, 1))} seconds."
     )
 
-    line += 2
-    stdscr_print(stdscr, line, 0, "Chunked upload file medium, 3 threads")
-    stdscr_print(stdscr, line + 1, 0, "Uploading file " + sample_file + " ...")
-    _, elapsed = file_upload_chunked(client, sample_file, demo_folder.id, 3)
-    stdscr_print(
-        stdscr,
-        line + 1,
-        0,
-        "Uploaded file " + sample_file + " in " + str(round(elapsed, 1)) + " seconds",
-    )
+    print("-" * 40)
 
-    line += 3
-    stdscr_end(stdscr, line)
+    sample_file = sample_files["medium"][1]
+    print(f" Manual upload {sample_file}")
+    _, elapsed = file_upload_manual(client, sample_file, demo_folder.id)
+    print(f" in {str(round(elapsed, 1))} seconds.")
+
+    print("-" * 40)
+
+    sample_file = sample_files["large"][1]
+    print(f" Manual upload {sample_file}")
+    _, elapsed = file_upload_manual(client, sample_file, demo_folder.id)
+    print(f" in {str(round(elapsed, 1))} seconds.")
+
+    print("=" * 40)
+    print("All done")
 
 
 if __name__ == "__main__":
