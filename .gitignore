@@ -10,8 +10,8 @@ __pycache__/
 .jwt.config.json
 
 # Test sample files
-tests/sample/*
-!tests/sample/README.md
+sample_files/*
+!sample_files/README.md
 
 # Distribution / packaging
 .Python

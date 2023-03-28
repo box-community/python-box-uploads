@@ -1,6 +1,6 @@
 """unit tests for box client"""
 
-from chunked_upload.box_client import box_client_get, box_client_as_user_get
+from box_uploads.box_client import box_client_get, box_client_as_user_get
 from tests.conftest import get_settings
 
 settings = get_settings()

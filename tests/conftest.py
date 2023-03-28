@@ -2,9 +2,9 @@
 
 from time import time
 import pytest
-from chunked_upload.config import Settings
-from chunked_upload.box_client import box_client_get, box_client_as_user_get
-from tests import sample_files as samples
+from box_uploads.config import Settings
+from box_uploads.box_client import box_client_get, box_client_as_user_get
+from box_uploads.sample_files import check_sample_files
 
 
 def get_settings() -> Settings:
@@ -21,16 +21,7 @@ def get_settings() -> Settings:
 def sample_files():
     """create sample test files"""
 
-    sample_local_files = {
-        "micro": ["1 MB", "tests/sample/file-1MB.bin"],
-        "small": ["100 MB", "tests/sample/file-100MB.bin"],
-        "medium": ["500 MB", "tests/sample/file-500MB.bin"],
-        "large": ["1 GB", "tests/sample/file-1GB.bin"],
-    }
-
-    for _, value in sample_local_files.items():
-        if not samples.check_test_file(value[0], value[1]):
-            samples.create_test_file(value[0], value[1])
+    sample_local_files = check_sample_files()
 
     yield sample_local_files
 

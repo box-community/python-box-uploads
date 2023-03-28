@@ -35,3 +35,21 @@ def check_test_file(size_str: str, file_name: str) -> bool:
     file_size = os.path.getsize(file_name)
 
     return file_size == size_bytes
+
+
+def check_sample_files() -> dict:
+    """check if sample files exist and create them if not"""
+
+    sample_local_files = {
+        "micro": ["1 MB", "sample_files/file-1MB.bin"],
+        "small": ["20 MB", "sample_files/file-20MB.bin"],
+        "medium": ["100 MB", "sample_files/file-100MB.bin"],
+        "large": ["500 MB", "sample_files/file-500MB.bin"],
+        "x-large": ["1 GB", "sample_files/file-1GB.bin"],
+    }
+
+    for _, value in sample_local_files.items():
+        if not check_test_file(value[0], value[1]):
+            create_test_file(value[0], value[1])
+
+    return sample_local_files
