@@ -1,2 +1,2 @@
-# python-chunked-uploads
-How to use the box chunked uploads in python
+# python-box-uploads
+3 Ways to upload content to your Box using Python

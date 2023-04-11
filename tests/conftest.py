@@ -5,6 +5,7 @@ import pytest
 from box_uploads.config import Settings
 from box_uploads.box_client import box_client_get, box_client_as_user_get
 from box_uploads.sample_files import check_sample_files
+from box_uploads.sample_folders import check_sample_folders
 
 
 def get_settings() -> Settings:
@@ -41,3 +42,12 @@ def box_test_folder():
     )
     yield folder
     folder.delete()
+
+
+@pytest.fixture(scope="module")
+def sample_folders():
+    """create sample test folders"""
+
+    sample_local_files = check_sample_folders()
+
+    yield sample_local_files

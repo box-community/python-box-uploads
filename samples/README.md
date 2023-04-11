@@ -1,6 +1,6 @@
 # Sample files
 ---
-Sample files to be uploaded will be created automtically in this folder:
+Sample files to be uploaded will be created automtically by the tests in this folder:
 
 -file-1MB.bin (1 megabyte)
 

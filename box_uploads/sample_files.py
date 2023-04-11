@@ -41,11 +41,11 @@ def check_sample_files() -> dict:
     """check if sample files exist and create them if not"""
 
     sample_local_files = {
-        "micro": ["1 MB", "sample_files/file-1MB.bin"],
-        "small": ["20 MB", "sample_files/file-20MB.bin"],
-        "medium": ["100 MB", "sample_files/file-100MB.bin"],
-        "large": ["500 MB", "sample_files/file-500MB.bin"],
-        "x-large": ["1 GB", "sample_files/file-1GB.bin"],
+        "micro": ["1 MB", "samples/file-1MB.bin"],
+        "small": ["20 MB", "samples/file-20MB.bin"],
+        "medium": ["100 MB", "samples/file-100MB.bin"],
+        "large": ["500 MB", "samples/file-500MB.bin"],
+        "x-large": ["1 GB", "samples/file-1GB.bin"],
     }
 
     for _, value in sample_local_files.items():

@@ -9,6 +9,7 @@ class Settings:
         self.as_user_id = as_user_id
         self.login_service_user = None
         self.login_as_user = None
+        self.sample_folder_base_dir = "samples/folder_to_upload"
 
     def __repr__(self):
         return f"Settings({self.__dict__})"
