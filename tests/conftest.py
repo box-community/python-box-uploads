@@ -48,6 +48,7 @@ def box_test_folder():
 def sample_folders():
     """create sample test folders"""
 
-    sample_local_files = check_sample_folders()
+    settings = get_settings()
+    sample_local_folder = check_sample_folders(settings.sample_folder_base_dir)
 
-    yield sample_local_files
+    yield sample_local_folder
