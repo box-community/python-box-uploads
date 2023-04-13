@@ -10,6 +10,7 @@ class Settings:
         self.login_service_user = None
         self.login_as_user = None
         self.sample_folder_base_dir = "samples/folder_to_upload"
+        self.min_file_size_for_chunked_upload = 1024 * 1024 * 1024
 
     def __repr__(self):
         return f"Settings({self.__dict__})"

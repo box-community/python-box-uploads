@@ -5,7 +5,7 @@ from box_uploads.box_client import box_client_get, box_client_as_user_get
 from box_uploads.box_file import file_upload, file_upload_chunked, file_upload_manual
 from box_uploads.config import Settings
 from box_uploads.sample_files import check_sample_files
-from box_uploads.sample_folders import check_sample_folders
+
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -31,7 +31,6 @@ def main():
 
     # check if sample files exist and create them if not
     sample_files = check_sample_files()
-    sample_folder = check_sample_folders(settings.sample_folder_base_dir)
 
     # get a client
     service_client = box_client_get(settings.jwt_config_path)
@@ -98,9 +97,8 @@ def main():
     _, elapsed = file_upload_manual(client, sample_file, demo_folder.id)
     print(f" in {str(round(elapsed, 1))} seconds.")
 
-    print("=" * 40)
-    print("All done")
-
 
 if __name__ == "__main__":
     main()
+    print("=" * 40)
+    print("All done")

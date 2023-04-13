@@ -1,4 +1,5 @@
 """tests for box folder upload"""
+import os
 from boxsdk.object.folder import Folder
 
 from box_uploads.box_client import box_client_as_user_get, box_client_get
@@ -17,10 +18,37 @@ def test_folder_upload(box_test_folder: Folder, sample_folders: str):
     assert client is not None
 
     # test upload folder
-    folder_upload(client, box_test_folder, sample_folders)
-    assert False
+    box_base_folder = folder_upload(
+        client,
+        box_test_folder,
+        sample_folders,
+        settings.min_file_size_for_chunked_upload,
+    )
 
-    # # uploading an existing folder should create a new version and not give an error
-    # folder, elapsed = folder_upload(client, sample_folders, box_test_folder.id)
-    # assert folder is not None
-    # assert elapsed > 0
+    # check if the first level of box folder is correct
+    box_item_list = [item.name for item in box_base_folder.get_items()]
+
+    is_upload_ok = True
+    for local_item in os.listdir(sample_folders):
+        is_upload_ok = is_upload_ok and local_item in box_item_list
+
+    assert is_upload_ok
+
+    # uploading an existing folder should create a new version and not give an error
+
+    # test upload folder a second time
+    box_base_folder = folder_upload(
+        client,
+        box_test_folder,
+        sample_folders,
+        settings.min_file_size_for_chunked_upload,
+    )
+
+    # check if the first level of box folder is correct
+    box_item_list = [item.name for item in box_base_folder.get_items()]
+
+    is_upload_ok = True
+    for local_item in os.listdir(sample_folders):
+        is_upload_ok = is_upload_ok and local_item in box_item_list
+
+    assert is_upload_ok

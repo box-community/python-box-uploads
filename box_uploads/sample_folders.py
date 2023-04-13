@@ -10,7 +10,7 @@ def check_sample_folders(sample_folder_base_dir: str) -> str:
     if not os.path.exists(sample_folder_base_dir):
         os.makedirs(sample_folder_base_dir)
         randomfiletree.iterative_gaussian_tree(
-            sample_folder_base_dir, nfiles=2.0, nfolders=1, maxdepth=3, repeat=3
+            sample_folder_base_dir, nfiles=2.0, nfolders=0.5, maxdepth=3, repeat=4
         )
 
     return sample_folder_base_dir

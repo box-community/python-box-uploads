@@ -1,16 +1,12 @@
 """ handles folder uploads to box"""
-import hashlib
+
 import pathlib
-import time
-from typing import Tuple
 
 from boxsdk import BoxAPIException, Client
-from boxsdk.object.file import File
-from boxsdk.object.folder import Folder
-from boxsdk.object.upload_session import UploadSession
-from boxsdk.config import API
 
-from box_uploads.box_file import file_upload
+from boxsdk.object.folder import Folder
+
+from box_uploads.box_file import file_upload, file_upload_chunked
 
 
 def create_box_folder(
@@ -21,8 +17,9 @@ def create_box_folder(
     try:
         folder = parent_folder.create_subfolder(folder_name)
     except BoxAPIException as err:
-        if err.status == 409:
-            folder = client.folder(folder_name=folder_name, parent=parent_folder)
+        if err.code == "item_name_in_use":
+            folder_id = err.context_info["conflicts"][0]["id"]
+            folder = client.folder(folder_id).get()
         else:
             raise err
 
@@ -30,7 +27,10 @@ def create_box_folder(
 
 
 def folder_upload(
-    client: Client, base_folder: Folder, local_folder_path: str
+    client: Client,
+    box_base_folder: Folder,
+    local_folder_path: str,
+    min_file_size: int = 1024 * 1024 * 20,
 ) -> Folder:
     """upload a folder to box"""
 
@@ -38,9 +38,14 @@ def folder_upload(
 
     for item in local_folder.iterdir():
         if item.is_dir():
-            new_box_folder = create_box_folder(client, item.name, base_folder)
+            new_box_folder = create_box_folder(client, item.name, box_base_folder)
+            print(f" Folder {item}")
             folder_upload(client, new_box_folder, item)
         else:
-            file_upload(client, item, base_folder.id)
+            if item.stat().st_size < min_file_size:
+                file_upload(client, item, box_base_folder.id)
+            else:
+                file_upload_chunked(client, item, box_base_folder.id)
+            print(f" \tUploaded  {item}")
 
-    return base_folder
+    return box_base_folder
