@@ -41,10 +41,12 @@ def main():
     item = [
         item
         for item in client.folder("0").get_items()
-        if (item.name == "Upload demo" and item.type == "folder")
+        if (item.name == settings.default_upload_folder and item.type == "folder")
     ]
     if len(item) == 0:
-        demo_folder = client.folder("0").create_subfolder("Upload demo")
+        demo_folder = client.folder("0").create_subfolder(
+            settings.default_upload_folder
+        )
     else:
         demo_folder = item[0].get()
 
